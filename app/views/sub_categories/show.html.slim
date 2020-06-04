@@ -1,0 +1,28 @@
+.container-big
+  .row
+    .col-xs-12
+      h1
+        = @sub_category.name
+      p Entregas para hoje em São Paulo
+  .row
+    .cards.card-grid
+      - @products.shuffle.each do |product|
+        .card.mar-top-md.flex.fdc.jcsb.tac style="max-width: 320px;"
+          = link_to product_path(product.slug) do
+            div
+              img src="#{product.photo}"
+            .card-info.pad-top-xs.pad-bottom-0
+              .card-desc
+                h3.mar-top-0
+                  strong
+                    = product.name.upcase
+              .card-pricing.mar-bottom-0
+                - if product.fake_price > product.price
+                  h3.green.mar-vert-0
+                    = "De: "
+                    span  style="text-decoration: line-through;"
+                      = "R$ #{product.fake_price}"
+                  h2.green.mar-top-0  
+                    = "Por: R$ #{product.price}"
+                h2.green.mar-top-0  
+                  = "R$ #{product.price}"  

@@ -1,0 +1,8 @@
+.container data-controller="admin--blocked"
+  .row
+    .col-xs-12.col-sm-8.col-sm-offset-2
+      = form_tag(admin_blocked_dates_path) do
+        .flex.jcsa
+          = text_field_tag :date, nil, class: "payment-form payment-form-control mar-right-md", data: {target: "admin--blocked.datepicker"}
+          = button_tag "Bloquear", class: "btn btn-danger"
+

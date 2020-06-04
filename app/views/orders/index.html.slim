@@ -1,0 +1,31 @@
+.container
+  - if params[:transaction_id].present?
+    h3.pad-left-sm Sua Compra está confirmada.
+    .row
+      .col-xs-12.col-sm-8
+        .box.bg-white.pad-sm
+          - @order.order_details.each do |od|
+            .flex.jcsb.aic
+              .mar-bottom-0.flex-grow-2
+                h5
+                  strong
+                    = od.product.name
+              p.mar-bottom-0.flex-grow-2.tac
+                = od.quantity
+              p.mar-bottom-0
+                = humanized_money_with_symbol(od.product.price)
+            hr.mar-top-sm
+
+      .col-xs-12.col-sm-4
+        .box.bg-white.pad-xs
+          h4 Endereço de Entrega
+          hr
+          .row
+            .col-xs-12
+              p #{@order.address}
+              p
+                = "Data de Entrega: #{@order.delivery_date}"
+              p
+                = "Frete: #{humanized_money_with_symbol(@order.delivery_price)}"
+              p
+                = "Valor Total: #{humanized_money_with_symbol(@order.price)}"

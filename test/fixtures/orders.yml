@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  address: MyString
+  delivery_date: 2019-03-11
+  order_detail: one
+  message: MyText
+
+two:
+  address: MyString
+  delivery_date: 2019-03-11
+  order_detail: two
+  message: MyText

@@ -1,0 +1,119 @@
+.container-full data-controller="admin--list"
+  .pad-md
+    .row
+      .flex.jcsa.block-mobile 
+        = simple_form_for [:admin, @special_order] do |f|
+          = f.button :submit, "Adicionar Pedido", class: "btn btn-danger mar-top-sm-mobile"
+        = link_to  admin_orders_path(filter: "today"), class: "btn btn-danger mar-top-sm-mobile" do
+            p.mar-top-0.mar-bottom-0 Ver Pedidos para Hoje
+        = link_to  admin_orders_path(filter: "all"), class: "btn btn-danger mar-top-sm-mobile" do
+            p.mar-top-0.mar-bottom-0 Ver Todos os Pedidos   
+        = link_to admin_mapa_de_hoje_path, class: "btn btn-danger mar-top-sm-mobile"   do
+            p.mar-top-0.mar-bottom-0 Mapa de Entregas para Hoje  
+        = link_to admin_orders_path(filter: "love"), class: "btn btn-danger mar-top-sm-mobile", style: "color: black; background-color: #FFCAD9 !important"   do
+            p.mar-top-0.mar-bottom-0 Ver Pedidos do Dia dos Namorados     
+      hr 
+      a data-action="click->admin--list#showInput"
+        |Pesquisar por Data de Entrega
+      .hidden.mar-top-md style="width: 350px" data-target="admin--list.dateInput"
+        = form_tag(admin_orders_path, method: :get) do
+          .flex.jcsa
+            = text_field_tag :date, nil, class: "payment-form payment-form-control mar-right-md", data: {target: "admin--list.datepicker"}
+            = button_tag "Filtrar", class: "btn btn-danger"
+      - if @date        
+        .flex.jcc.mar-top-md
+          h4 
+            = "Entregas para o dia #{@date} "        
+
+      .box.bg-white.pad-sm.hidden-xs
+        .flex.jcsb.aic
+          = link_to  admin_orders_path(sort: "code"),style: "width: 10%"  do
+            h3 style=""
+              |Código
+          = link_to  admin_orders_path(sort: "name"), style: "width: 15%"  do    
+            h3 style=""
+              |Remetente
+          h3.tal style="min-width: 10%"
+            |Data do Pedido  
+          = link_to  admin_orders_path(sort: "date"), style: "min-width: 10%" do   
+            h3.tal style=""
+              |Data de Entrega 
+          h3.tal style="min-width: 10%"
+            |Horário de Entrega
+          h3.tal style="min-width: 10%"
+            |Valor
+          h3.tal style="min-width: 10%"  
+            |Status
+          h3.tal style="min-width: 10%"  
+            |Detalhes
+          h3.tal style="min-width: 5%"  
+            |Compra
+        hr.mar-top-0.mar-bottom-0
+        - @orders.order(global_id: :desc).each_with_index do |order, index|
+          div class=(order.delivery_date == @love_day && order.state != "delivered" && order.state != "shipping" ? "order-item-mothers" : "order-item-#{order.state}") 
+            .flex.jcsb.aic
+              h4 style="width: 10%"
+                = "#{order.global_id}.#{order.delivery_date.strftime("%d%m%Y")}"
+              h4 style="width: 15%"
+                = order.sender_name.truncate(20)
+              h4.tal style="min-width: 10%"
+                = order.created_at.strftime("%d / %m / %Y")   
+              h4.tal style="min-width: 10%"
+                = order.delivery_date.strftime("%d / %m / %Y") 
+              h4.tal style="min-width: 10%"
+                = order.delivery_cost.name  
+              h4.tal style="min-width: 10%"
+                = "R$#{order.price}"
+              h4.tal style="min-width: 10%"  
+                = order.state_translated
+              / .flex.jcsa 
+              h4.tal style="min-width: 10%" 
+                = link_to "Ver", admin_order_path(order)
+              h4.tal style="min-width: 5%" 
+                - if order.payment == {}
+                  = "Whats"
+                - else
+                  = "Site"  
+            hr.mar-top-0.mar-bottom-0
+      .hidden-lg.hidden-md.hidden-sm  
+        - @orders.order(global_id: :desc).each_with_index do |order, index|  
+          .pad-xs.mar-top-xs class=(order.delivery_date == @love_day && order.state != "delivered" && order.state != "shipping" ? "order-item-mothers" : "order-item-#{order.state}") 
+            .flex.jcsb
+              p Pedido: 
+              p 
+                = "#{order.global_id}.#{order.delivery_date.strftime("%d%m%Y")}"
+            .flex.jcsb
+              p Data Entrega:     
+              p.tal 
+                = order.delivery_date.strftime("%d / %m / %Y") 
+            .order-info.hidden id="order-#{order.id}"   
+              .flex.jcsb
+                p Nome:     
+                p 
+                  = order.sender_name.truncate(20)
+              .flex.jcsb
+                p Data Pedido:     
+                p.tal 
+                  = order.created_at.strftime("%d / %m / %Y")   
+              .flex.jcsb
+                p Frete:     
+                p.tal 
+                  = order.delivery_cost.name  
+              .flex.jcsb
+                p Preço     
+                p.tal 
+                  = "R$#{order.price}"
+              .flex.jcsb
+                p Status:     
+                p.tal   
+                  = order.state_translated
+              .flex.jcsb    
+                p.tal  
+                  = link_to "Ver", admin_order_path(order)
+                p.tal style="min-width: 5%" 
+                  - if order.payment == {}
+                    = "Whats"
+                  - else
+                    = "Site"
+            a id="expand-#{order.id}" data-index="#{order.id}"  data-action="click->admin--list#showOrder" Expandir
+            a.hidden id="hide-#{order.id}" data-index="#{order.id}"  data-action="click->admin--list#hideOrder" Recolher    

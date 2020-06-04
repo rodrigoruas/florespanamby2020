@@ -1,0 +1,53 @@
+.order-item-mothers {
+  background-color: #FFCAD9;
+}
+
+.order-item-paid {
+  background-color: #E1DA6D;
+}
+
+.order-item-delivered {
+  background-color: #7BD88F;
+}
+
+.order-item-received {
+  background-color: #00B8E5;
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  div.whatsapp-bubble {
+    display: none;
+  }
+
+  .no-print {
+    display: none;
+  }
+
+  .print-only {
+    display: block;
+  }
+
+  img {
+    max-width: 100px !important;
+  }
+}
+
+.mapboxgl-popup-content {
+  padding: 5px!important;
+}
+@media print {
+  .print-img {
+    width: 20px;
+  }
+  // .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+  //      float: left;
+  // }
+  .col-xs-12 {
+       width: 80%;
+  }
+}
+

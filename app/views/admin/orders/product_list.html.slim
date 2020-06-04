@@ -1,0 +1,19 @@
+h1 Product List
+
+.container
+  .pad-md
+    .row
+      .flex.jcsa
+        = link_to new_admin_product_path, class: "btn btn-primary" do
+          |Adicionar Produto
+      .box.bg-white.pad-sm
+        - @array.each do |object, qty|
+          .flex.jcsb.aic
+            .avatar-index style="max-width: 75px;"
+              = image_tag object[:product].photo, style: "height: 50px; border-radius: 5px; max-width: 50px;"
+            h4 style="width: 25%"
+              = object[:product].name
+            h4.tal style="min-width: 10%"
+              = object[:qty] 
+        
+          hr.mar-top-sm

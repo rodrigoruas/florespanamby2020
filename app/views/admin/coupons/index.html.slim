@@ -1,0 +1,25 @@
+.container
+  .pad-md
+    .row
+      .flex.jcsa
+        = link_to new_admin_coupon_path, class: "btn btn-danger" do
+          |Adicionar Coupon
+      .box.bg-white.pad-sm
+        - @coupons.each do |coupon|
+          .flex.jcsb.aic
+            h4 style="width: 25%"
+              = coupon.code.upcase
+            h4
+              = "#{coupon.discount_percentage} %"
+            h4
+              = coupon.valid_until.strftime("%d / %m / %y")
+            - unless coupon.order_id == nil
+              h4
+                = link_to admin_order_path(coupon.order) do
+                  = "Usado: #{coupon.order_id}"
+            - else
+                = "Disponível"
+            = link_to "Ver", coupon_path(coupon)
+            = link_to "Editar", edit_admin_coupon_path(coupon)
+            = link_to "Apagar", admin_coupon_path(coupon), method: :delete, data: { confirm: "Tem certeza?" }
+          hr.mar-top-sm

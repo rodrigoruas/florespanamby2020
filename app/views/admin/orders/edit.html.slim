@@ -1,0 +1,108 @@
+= simple_form_for [:admin, @order], wrapper: :horizontal_form do |f|
+  .container-big data-controller="admin--order"
+    .flex.jcsb.aic
+      div
+        h3.pad-left-sm
+          = "Pedido número: #{@order.global_id}.#{@order.delivery_date.strftime("%d%m%Y")}"
+        h3.pad-left-sm  
+          = "DATA DE ENTREGA: #{@order.delivery_date.strftime("%d/%m/%Y")}"
+        h3.red.pad-left-sm
+          = @order.state_translated
+        - if @order.admin_order  
+          h3.red.pad-left-sm
+            | ORDEM CRIADA PELO ADMINISTRADOR 
+          = link_to admin_send_email_path(order_id: @order.id) , method: :post do
+              h3.red Enviar Email
+                  
+
+      = link_to "Voltar", admin_orders_path, class: "btn-warning btn-lg no-print"
+    .row
+      .col-xs-12.col-sm-7
+        .box.bg-white.pad-sm
+          - @order.order_details.each do |od|
+            .flex.jcsb.aic
+              .mar-bottom-0
+                h5
+                  strong
+                    = "#{od.quantity} x #{od.product.name.truncate(30)}"
+              p.mar-bottom-0.no-print
+                = humanized_money_with_symbol(od.product.price)
+            hr.mar-top-xs
+          .row
+            .col-xs-7
+            .col-xs-5
+
+              - if @order.delivery_cost.nil?
+                 h3.tar.mar-top-0.no-print 
+                  #order_msg
+                  strong#order_total_price
+                    = "Total: #{humanized_money_with_symbol(@order.price)}"
+              - elsif @order.coupon == nil
+                h3.tar.mar-top-0
+                  strong#order_msg
+                    = "Frete #{humanized_money_with_symbol(@order.delivery_price)}"
+                h3.tar.mar-top-0.no-print 
+                  strong#order_total_price
+                    = "Total: #{humanized_money_with_symbol(@order.price)}"
+              - else
+                h3.tar.mar-top-0
+                  strong#order_msg
+                    = "Frete #{humanized_money_with_symbol(@order.delivery_price)}"  
+                h3.tar.mar-top-0.no-print  style="text-decoration: line-through"
+                  strong
+                    = "Total: #{humanized_money_with_symbol(@order.default_price)}"
+                h3.tar.mar-top-0.no-print 
+                  strong#order_total_price
+                    = "Total: #{humanized_money_with_symbol(@order.price)}"
+                  h4.tar
+                      = "#{@order.coupon.discount_percentage}% de desconto"
+                  h4.tar
+                    = "(#{@order.coupon.code})"
+
+            = f.input :extra_products, as: :text, label: false, input_html: {rows: 4, style: "min-height: 160px;"}, placeholder: "Produtos Adicionais"      
+
+      .col-xs-12.col-sm-5
+        .row
+          .col-xs-12
+            .box.bg-white.pad-xs
+              h4 Dados para Entrega
+              hr
+              h5
+                = "Endereço: #{@order.full_address}"
+              input.hidden data-target="admin--order.orderId" value="#{@order.id}"
+              = f.input :delivery_cost_id, :collection => @delivery_costs, label_method: lambda{|bp| "#{bp.name} - #{humanized_money_with_symbol(bp.get_price(@order.delivery_distance))}"}, class: "text-right pull-right mar-bottom-0", label: false, prompt: "Selecione o Horário de Entrega", style: "width: 100% ", input_html: {style: "width: 100%;", data: {action: "change->admin--order#deliveryCalculator", target: "orders--order.delivery"}}   
+              - unless @order.delivery_cost.nil?
+                h5
+                  = "Data: #{(@order.delivery_date.strftime("%d / %m / %y"))}"
+                h5
+                  = "Período: #{(@order.delivery_cost.name)}"
+      .row
+        .col-xs-12.col-sm-7
+          .pad-left-sm
+            h3.red Remetente:
+            = f.input :sender_name, label: false, class: "mar-right-xs", placeholder: "Nome", input_html: {data: {target: "orders--order.senderName",  action: "keyup->orders--order#handleChange"}}
+
+            = f.input :sender_phone, label: false, input_html: {type: "tel", data: {target: "orders--order.senderPhone", action: "keyup->orders--order#handleChange"}}, placeholder: "Telefone"
+            
+            = f.input :guest_email, label: false, input_html: {data: {target: "orders--order.senderEmail", action: "keyup->orders--order#handleChange keyup->orders--order#verifyEmail"}}, placeholder: "E-mail"
+            h3.red Mensagem:
+            = f.input :message, as: :text, label: false, input_html: {rows: 8, style: "min-height: 250px;"}, placeholder: "Escreva uma linda mensagem!"
+        
+        .col-xs-12.col-sm-5
+          .pad-left-sm
+            h3.red Destinatário:
+            = f.input :recipient_name, label: false, class: "mar-right-xs", placeholder: "Nome"
+            p
+            = f.input :recipient_phone, label: false, input_html: {type: "tel", data: {target: "orders--order.phoneSec"}}, placeholder: "Telefone"
+            h3.red Observações
+            = f.input :request, as: :text, label: false, input_html: {rows: 4, style: "min-height: 160px;"}, placeholder: "Algum pedido extra? Observação? Como podemos melhorar seu pedido?"  
+            .no-print   
+              h4 Status do Pedido
+              = f.input :state, :collection => ["Pago", "Entregue", "Completado"], class: "text-right pull-right mar-bottom-0", label: false,  selected: @order.state_translated
+              h4 Preço Final
+              = f.input :price, label: false
+              h4 Novo Código (somente o numero. nao incluir a data.)
+              = f.input :global_id, label: false, input_html: {value: @global_id}
+              = f.button :submit, 'Atualizar', class: 'btn btn-danger'
+
+

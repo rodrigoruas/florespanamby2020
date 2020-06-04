@@ -1,0 +1,11 @@
+.container
+  .row
+    .col-xs-12.col-sm-8.col-sm-offset-2
+      = simple_form_for [:admin, @category], wrapper: :horizontal_form do |f|
+        .panel.panel-default
+          .panel-heading#info-bas
+            h4 Criar Categoria Principal
+          .panel-body
+            = f.input :name, maxlength: 30, char_counter: true, label: "Nome"
+            = f.input :navbar, label: "Mostrar na Barra de Menus", label_html: {class: "mar-left-sm"}
+            = f.button :submit, 'Salvar', class: 'btn btn-primary'

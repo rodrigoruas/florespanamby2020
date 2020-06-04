@@ -1,0 +1,13 @@
+- @products.each do |product|
+  .flex.jcsb.aic
+    .avatar-index style="max-width: 75px;"
+      = image_tag product.photo, style: "height: 50px; border-radius: 5px; max-width: 50px;"
+    h4 style="width: 10%"
+      = product.name.truncate(30)
+    h4.tal style="min-width: 10%"
+      = "R$#{product.price}"
+    = simple_form_for [:admin, @special_order, @order_detail], html: {id: "new_order_detail_form_#{product.id}"}, remote: true do |f|
+      div style="display: none"
+        = f.input :product_id, as: :hidden,  input_html: { value: product.id , id: "order_detail_input_product_id_#{product.id}"}, wrapper_html: {id: "order_detail_product_id_#{product.id}"}
+      = f.button :submit, "Adicionar", class: "btn btn-danger"
+  hr.mar-top-sm

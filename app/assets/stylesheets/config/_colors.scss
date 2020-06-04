@@ -1,0 +1,48 @@
+$light-gray: #F4F4F4;
+$gray: #36494E;
+$red: #DD6E42;
+$blue: #1C2B3E;
+// $green: #A4C2A5;
+$green: #426A5A;
+$pink: #D5B0AC;
+$dark-gray: #36494E;
+$white: #FFFFFF;
+$yellow: #F7CA18;
+$black: #000000;
+$beige: #F6F4F0;
+
+// Define Colors Hash
+$colors: (
+  red: $red,
+  blue: $blue,
+  green: $green,
+  black: $black,
+  white: $white,
+  dark: $black,
+  beige: $beige,
+  gray: $light-gray,
+  pink: $pink,
+  dark-gray: $dark-gray,
+  medium-gray: $gray,
+);
+
+// Text Colors
+
+@each $color-id, $color in $colors {
+  .#{"" + $color-id}.#{"" + $color-id} { color: $color; }
+}
+
+// Backgrounds
+@each $color-id, $color in $colors {
+  .bg-#{"" + $color-id} {
+    background: $color;
+  }
+}
+
+// Border Colors
+
+@each $color-id, $color in $colors {
+  .border-#{"" + $color-id} {
+    border-color: $color;
+  }
+}

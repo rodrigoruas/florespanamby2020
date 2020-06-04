@@ -1,0 +1,24 @@
+.container-big
+  .row
+    .col-xs-12.col-md-6.col-md-offset-3
+      hr.mar-top-0
+      .flex.jcsb
+        / = link_to "Mais Vendidos", products_path(sort: "price_up"), class: "btn btn-xs btn-success", style: "max-width: 30%; white-space: normal;"
+        / = link_to "Menos de R$ 100", products_path(max_price: "100"), class: "btn btn-xs btn-success", style: "max-width: 30%; white-space: normal;"
+        / = link_to "Menos de R$ 200", products_path(max_price: "200"), class: "btn btn-xs btn-success", style: "max-width: 30%; white-space: normal;"
+  .row
+    .cards.card-grid
+      - @search.products.each do |product|
+        = link_to product_path(product.slug) do
+          .card.mar-top-md.flex.fdc.jcsb.tac
+            img src="#{product.photo}"
+            .card-desc.pad-left-xs.pad-right-xs
+              p
+                strong
+                  = product.name.upcase
+            .card-pricing.mar-bottom-0
+              h3.green.mar-top-0
+                = "R$ #{product.price}"
+
+
+

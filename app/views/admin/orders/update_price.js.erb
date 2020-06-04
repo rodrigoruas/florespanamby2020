@@ -1,0 +1,3 @@
+document.getElementById('order_total_price').innerHTML = "<strong>Total:</strong> <%=humanized_money_with_symbol(@order.price)%>"
+document.getElementById('order_msg').innerHTML = "<strong>Valor do Frete:</strong> <%=humanized_money_with_symbol(@order.delivery_price)%>"
+document.getElementById('order_price').value  = "<%=@order.price%>"

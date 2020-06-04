@@ -1,0 +1,30 @@
+.container
+  .pad-md
+    .row
+      .col-xs-12.col-sm-3.pad-sm
+        = link_to admin_products_path, class: "btn btn-danger" do
+          |Administrar Produtos
+      .col-xs-12.col-sm-3.pad-sm
+        = link_to admin_categories_path, class: "btn btn-danger" do
+          |Administrar Categorias
+      .col-xs-12.col-sm-3.pad-sm
+        = link_to admin_delivery_costs_path, class: "btn btn-danger" do
+          |Administrar Fretes
+      .col-xs-12.col-sm-3.pad-sm
+        = link_to admin_orders_path, class: "btn btn-danger" do
+          |Administrar Pedidos
+      .col-xs-12.col-sm-3.pad-sm
+        = link_to admin_coupons_path, class: "btn btn-danger" do
+          |Cupons de Desconto
+      .col-xs-12.col-sm-3.pad-sm    
+        = link_to admin_not_paid_orders_path, class: "btn btn-danger" do
+            p.mar-top-0.mar-bottom-0 Ver Pedidos Pendentes  
+      .col-xs-12.col-sm-3.pad-sm    
+        = link_to admin_product_list_path, class: "btn btn-danger" do
+            p.mar-top-0.mar-bottom-0 Lista de Compras  
+      .col-xs-12.col-sm-3.pad-sm    
+        = link_to  admin_mapa_de_hoje_path, class: "btn btn-danger", style: " color: black; background-color: #FFCAD9 !important"   do
+            p.mar-top-0.mar-bottom-0 Mapa de Entregas para Hoje 
+      .col-xs-12.col-sm-3.pad-sm    
+        = link_to admin_blocked_dates_path, class: "btn btn-danger" do
+            p.mar-top-0.mar-bottom-0 Dias Bloqueados                

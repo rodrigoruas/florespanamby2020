@@ -1,0 +1,103 @@
+-  unless @special_order.order_details.count == 0
+.wrapper data-controller="address admin--special"
+  = simple_form_for [:admin, @special_order,  @order] do |f|
+    .container-big
+      .row
+        p.mar-vert-xs.mar-left-xs
+          small
+            ' Etapas :
+          strong
+            ' 1. Seu Carrinho >
+          small
+            ' 2. Entrega e Frete >
+            ' 3. Pagamento >
+            ' 4. Confirmação
+      h2.mar-left-xs Seu Carrinho de Compras
+      .row
+        .col-xs-12.col-sm-7
+          hr.mar-0
+          - @order_details.each do |od|
+            = f.hidden_field :order_detail_ids, multiple: true
+            .flex.jcsb.aic
+              .avatar-index.hidden-xs
+                = image_tag od.product.photo, style: "max-width: 100px; border-radius: 5px;"
+              div.flex-grow-2 style="max-width: 25%" 
+                h3.mar-bottom-xs.mar-top-xs
+                  = od.product.name.truncate(30).upcase
+              div.flex.jcsb.aic     
+                a.mar-right-md style="font-size: 30px"  odQty="#{od.quantity}" odId= "#{od.id}" data-action="click->admin--special#downQuantity"  -
+                .div id="quantity-#{od.id}" data-target="address.quantity"
+                  = od.quantity
+                a.mar-left-md style="font-size: 30px"   odQty="#{od.quantity}" odId= "#{od.id}" data-action="click->admin--special#upQuantity" +
+              h2.mar-vert-0
+                = humanized_money_with_symbol(od.product.price)
+              = link_to admin_special_order_order_detail_path(@special_order, od), method: :delete do
+                = fa_icon "trash 2x"    
+            hr.mar-0
+          .flex.jcsb.aic
+            div
+            div
+              h3
+                strong
+                  = "Total: #{humanized_money_with_symbol(@amount)}"
+              h4.tar
+                = "(frete a ser calculado)"              
+        .col-xs-12.col-sm-5.padding-mobile-0
+          .box.bg-white.pad-xs.border-cart.pad-horiz-0-xs
+            h4 Dados para Entrega e Frete
+            hr.mar-bottom-0
+            .row
+              .col-xs-12
+                - if flash[:alert]
+                  .red = flash[:alert]
+                - if flash[:notice]
+                  .green = flash[:notice]
+            .row
+              .col-xs-12.col-sm-6
+                = f.input :delivery_date, as: :string, label: false, input_html: {data: {target: "address.datepicker", action: "change->address#handleChange"}, class: "form-control mar-top-sm", style: "width: 100%"}, placeholder: "Data de Entrega"
+              .col-xs-12.col-sm-6
+              .col-xs-12 
+                .algolia-address data-target="address.algoliaAddress"
+                  h4.mar-bottom-xs.mar-top-0   Digite sua Rua, Avenida etc
+                  input.form-control.mar-bottom-xs data-target="address.input"
+                  .pad-0.tac
+                    a.red data-action="address#hideAlgolia" Não Encontrei minha Rua
+                  hr.mar-bottom-0
+                .zipcode-inputs.hidden data-target="address.zipcodeInputs"  
+                  h4.red.mar-bottom-xs.mar-top-0   Digite seu CEP  
+            .hidden data-target="address.fields"    
+              .row
+                .algolia-inputs data-target="address.algoliaInputs"      
+                  .col-xs-12
+                    = f.input :zipcode, as: :zipcode, label: false, placeholder: "CEP", input_html: { disabled: true, class: "", style: "width: 80%", data: {target: "address.cep", action: "keyup->address#handleChange change->address#handleChange"}}, label: "Cep"
+                  .col-xs-12
+                    = f.input :street, label: "Rua", input_html: {disabled: true, data: {target: "address.street", action: "keyup->address#handleChange change->address#handleChange"}}
+                  #address-details
+                    .col-xs-6
+                      = f.input :street_number, label: "Número", input_html: {data:{ action: "keyup->address#handleChange", target: "address.streetNumber"}}
+                    .col-xs-6
+                      = f.input :complement, label: "Complemento"
+                    .col-xs-12.col-sm-6
+                      = f.input :neighborhood, as: :neighborhood, label: "Bairro", input_html: {data: {target: "address.neighborhood", action: "keyup->address#handleChange change->address#handleChange"}}
+                    .col-xs-12.col-sm-6
+                      = f.input :city, as: :city, label: "Cidade", input_html: {data: {target: "address.city", action: "keyup->address#handleChange change->address#handleChange"}}
+                    div style="display: none;"
+                      = f.input :uf, as: :state, label: "Estado", input_html: {data: {target: "address.state"}}
+                      = f.input :latitude, input_html: {data: {target: "address.latitude"}}
+                      = f.input :longitude, input_html: {data: {target: "address.longitude"}}
+                .zipcode-inputs.hidden data-target="address.zipcodeInputs"      
+                  .col-xs-12
+                    h4.mar-bottom-xs.mar-top-0   Digite seu CEP   
+            #cart-button.tac
+              = f.button :submit, 'CONTINUAR', class: 'btn-danger btn-lg', style: "width: 80%;", data: {target: "address.button"} 
+  .container
+    h2.mar-left-xs Adicione Produtos ao carrinho
+    .row
+      .col-xs-12
+        p.hidden data-target="admin--special.id"
+         = @special_order.id
+        input.form-control.mar-bottom-sm data-target="admin--special.searchInput" data-action="keyup->admin--special#updateSearch"  style="width:100%; border: 2px solid #A4C2A5; border-radius: 5px;" placeholder="Qual produto você quer buscar?"
+      .col-xs-12
+        #products-list.box.bg-white.pad-sm
+          = render 'products', products: @products
+   

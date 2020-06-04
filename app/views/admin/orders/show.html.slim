@@ -1,0 +1,125 @@
+.container-big data-controller="orders"
+  .flex.jcsb.aic.no-print.block-mobile  
+    = link_to edit_admin_order_path(@order), class: "btn btn-danger" do
+      |Editar Pedido
+    = link_to admin_order_print_path(@order), class: "btn btn-danger" do
+      |Versão para Impressão
+    = link_to admin_order_receipt_path(@order), class: "btn btn-danger" do
+      |Comprovante do Cliente  
+    = link_to  admin_orders_path, class: "btn btn-danger no-print" do
+      |Voltar
+  div.no-print     
+    - if @order.admin_order  
+      h3.red.pad-left-sm
+        | ORDEM CRIADA PELO ADMINISTRADOR 
+    = link_to admin_send_email_path(order_id: @order.id) , method: :post do
+        h3.red Enviar Email        
+  .flex.jcsb.aic
+    div
+      h3.pad-left-sm
+        = "Pedido número: #{@order.global_id}.#{@order.delivery_date.strftime("%d%m%Y")}"
+      h3.pad-left-sm  
+        = "DATA DE ENTREGA: #{@order.delivery_date.strftime("%d/%m/%Y")}"
+      h3.red.pad-left-sm
+        = @order.state_translated
+  .print-only
+    .row
+      .col-xs-12
+        h5
+          = "Endereço: #{@order.address}"  
+        h5
+          = "Data: #{(@order.delivery_date.strftime("%d / %m / %y"))}"
+        h5
+          = "Período: #{(@order.delivery_cost.name)}" 
+
+  .row
+    .col-xs-12.col-sm-7
+      .box.bg-white.pad-sm
+        - @order.order_details.each do |od|
+          .flex.jcsb.aic.block-mobile 
+            .avatar-index
+              = image_tag od.product.photo, style: "max-width: 150px; border-radius: 5px; print-img"
+            .mar-bottom-0
+              h3
+                strong
+                  = "#{od.quantity} x #{od.product.name.truncate(30)}"
+            h3.mar-bottom-0
+              = humanized_money_with_symbol(od.product.price)
+          hr.mar-top-xs
+        h2
+          strong
+            = @order.extra_products
+        .row
+          .col-xs-7
+          .col-xs-5
+            - if @order.coupon == nil
+              - if @order.delivery_price == 0
+                h3.tar.mar-top-0
+                  strong 
+                    = "Frete #{humanized_money_with_symbol(@order.delivery_cost.price)}"
+              - else
+                h3.tar.mar-top-0
+                  strong 
+                    = "Frete #{humanized_money_with_symbol(@order.delivery_price)}"
+              h3.tar.mar-top-0
+                strong
+                  = "Total: #{humanized_money_with_symbol(@order.price)}"
+            - else
+              - if @order.delivery_price == 0
+                h3.tar.mar-top-0
+                  strong 
+                    = "Frete #{humanized_money_with_symbol(@order.delivery_cost.price)}"
+              - else
+                h3.tar.mar-top-0
+                  strong 
+                    = "Frete #{humanized_money_with_symbol(@order.delivery_price)}"
+              h3.tar.mar-top-0  style="text-decoration: line-through"
+                strong
+                  = "Total: #{humanized_money_with_symbol(@order.default_price)}"
+              h3.tar.mar-top-0
+                strong
+                  = "Total: #{humanized_money_with_symbol(@order.price)}"
+                h4.tar
+                    = "#{@order.coupon.discount_percentage}% de desconto"
+                h4.tar
+                  = "(#{@order.coupon.code})"
+      .pad-left-sm
+        h3.red Remetente:
+        p
+          = @order.sender_name
+        p
+          = @order.sender_phone
+        p
+          = @order.guest_email
+       
+
+      .pad-left-sm
+        h3.red Destinatário:
+        p
+          = @order.recipient_name
+        p
+          = @order.recipient_phone
+        h3.red Mensagem:
+        p
+          = @order.message
+        h3.red Observações
+        p
+          = @order.request
+    .col-xs-12.col-sm-5.no-print
+      .row
+        .col-xs-12
+          .box.bg-white.pad-xs
+            h4 Dados para Entrega
+            hr
+            h5
+              = "Endereço: #{@order.full_address}"
+            - unless @order.delivery_cost.nil?
+              h5
+                = "Data: #{(@order.delivery_date.strftime("%d / %m / %y"))}"
+              h5
+                = "Período: #{(@order.delivery_cost.name)}"
+              .no-print   
+                = simple_form_for [:admin, @order], wrapper: :horizontal_form do |f|
+                  h4 Status do Pedido
+                  = f.input :state, :collection => ["Pago", "Recebido", "Em trânsito", "Entregue", "Completado", "Arquivado"], class: "text-right pull-right mar-bottom-0", label: false, selected: @order.state_translated
+                  = f.button :submit, 'Atualizar', class: 'btn btn-danger'

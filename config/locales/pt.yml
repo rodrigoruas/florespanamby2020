@@ -1,0 +1,10 @@
+pt:
+  activerecord:
+    errors:
+      models:
+        order:
+          attributes:
+            zipcode:
+              blank: Obrigatorio
+            delivery_date:
+              blank: Obrigatorio
