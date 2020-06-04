@@ -1,0 +1,23 @@
+.container-full
+  .pad-md
+    .row
+      h3 Valores dos Fretes
+      .flex.jcsa
+        = link_to new_admin_delivery_cost_path, class: "btn btn-primary" do
+          |Adicionar Preço de Frete
+      .box.bg-white.pad-sm
+        - @delivery_costs.each do |dc|
+          .flex.jcsb.aic
+            h4.flex-grow-2
+              = dc.name
+            h4.flex-grow-2
+               = "#{dc.multiplier}" 
+            h4.flex-grow-2
+              = "D. Minima: #{dc.min_distance} km"
+            h4.flex-grow-2
+              = "D. Máxima: #{dc.max_distance} km"
+            .flex-grow-2
+              = link_to "Ver", admin_delivery_cost_path(dc), class: "pad-sm"
+              = link_to "Editar", edit_admin_delivery_cost_path(dc), class: "pad-sm"
+              = link_to "Apagar", admin_delivery_cost_path(dc), method: :delete, data: { confirm: "Tem certeza?" }, class: "pad-sm"  
+          hr.mar-top-sm

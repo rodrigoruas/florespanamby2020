@@ -1,0 +1,41 @@
+.wrapper data-controller="products"
+  .banner.banner-half.flex.jcsa.aic  style="background-image: url('https://res.cloudinary.com/dib2nyadi/image/upload/c_scale,w_1700/v1560098531/Flowers%20Ecommerce/jeremy-wong-weddings-652841-unsplash.jpg');"
+    .new-banner-content.pad-md.tac
+      h1.red.mar-top-xs Nossos Produtos
+      p style="margin-bottom: 0px;"
+        | Presenteie em poucos cliques quem você ama
+      p.mar-top-0 Entregas para o mesmo dia!
+.container-big
+  .row
+    .col-xs-12.col-md-6.col-md-offset-3
+      = render "shared/search_form"
+      hr.mar-top-0
+      .flex.jcsb
+        = link_to "Menos de R$ 50", products_path(max_price: "50"), remote: true, class: "btn btn-xs btn-primary", style: "max-width: 40%; white-space: normal; padding: 5px;"
+        = link_to "Menos de R$ 100", products_path(max_price: "100"),  remote: true, class: "btn btn-xs btn-primary", style: "max-width: 40%; white-space: normal; padding: 5px;"
+        = link_to "Menos de R$ 200", products_path(max_price: "200"),  remote: true, class: "btn btn-xs btn-primary", style: "max-width: 40%; white-space: normal; padding: 5px;"
+  
+  .row
+    .cards.card-grid
+      - @featured_products.shuffle.each do |product|
+        .card.mar-top-md.flex.fdc.jcsb.tac style="max-width: 320px;"
+          = link_to product_path(product.slug) do
+            div
+              img src="#{product.photo}"
+            .card-info.pad-top-xs.pad-bottom-0
+              .card-desc
+                h3.mar-top-0
+                  strong
+                    = product.name.upcase
+              .card-pricing.mar-bottom-0
+                - if product.fake_price > product.price
+                  h3.green.mar-vert-0
+                    = "De: "
+                    span  style="text-decoration: line-through;"
+                      = "R$ #{product.fake_price}"
+                  h2.green.mar-top-0  
+                    = "Por: R$ #{product.price}"
+                h2.green.mar-top-0  
+                  = "R$ #{product.price}" 
+    #products-list.cards.card-grid            
+      = render 'products', products: @products

@@ -1,0 +1,30 @@
+<html lang="en">
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <style type="text/css" media="screen">
+        body {
+          font-family: "Helvetica", sans-serif;
+        }
+        ul {
+            list-style-type: none;
+          }
+      </style>
+  </head>
+  <body>
+    <h3> <%= "Novo Pedido na Flor & Tal" %></h3>
+    <p>Pagamento confirmado.</p>
+    <p>Veja os dados do pedido</p>
+     <ul>
+      <p></p>
+      <% @order.products.each do |prod| %>
+        <li><strong>Produto: </strong><%= prod.name %></li>
+        <li><strong>Valor: </strong><%= "R$ #{prod.price}" %></li>
+      <% end %>
+    </ul>
+    <p><strong>Endereço para Entrega: </strong><%= @order.address %></p>
+    <p><strong>Data: </strong><%= @order.delivery_date %></p>
+    <p><strong>Horário: </strong><%= @order.delivery_cost.name %></p>
+    <p><strong>Destinatário: </strong><%= @order.recipient_name %></p>
+    <p><strong>Mensagem: </strong><%= @order.message %></p>
+  </body>
+</html>

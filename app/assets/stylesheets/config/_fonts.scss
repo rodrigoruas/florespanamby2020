@@ -1,0 +1,29 @@
+// Import Google fonts
+@import url("https://fonts.googleapis.com/css?family=Karla:400,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500");
+// Define fonts for body and headers
+$base-font: 'Montserrat', sans-serif;
+$header-font: 'Karla', sans-serif;
+
+$small-size: 14px;
+$base-size: 17px;
+$medium-size: 19px;
+$big-size: 25px;
+$base-height: 1.428571429;
+$base-radius: 2px;
+$bold-size: 20px;
+$font-light: 300;
+
+.lh-double {
+  line-height: 2.0;
+}
+
+p {
+  font-size: $small-size;
+}
+
+// Text Alignment
+.tac { text-align: center; }
+.tal { text-align: left; }
+.tar { text-align: right; }
+.taj { text-align: justify; }

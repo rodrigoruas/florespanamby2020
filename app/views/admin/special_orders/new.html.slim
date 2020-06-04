@@ -1,0 +1,13 @@
+.container
+  .row
+    .col-xs-12.col-sm-8.col-sm-offset-2
+      = simple_form_for [:admin, @special_order], wrapper: :horizontal_form do |f|
+        .panel.panel-default
+          .panel-heading#info-bas
+            h4 Criar Link de Pagamento
+          .panel-body
+            = f.input :description, label: "Descrição do Pagamento"
+            = f.input :customer_name, label: "Nome do Cliente"
+            = f.input :customer_email, label: "Email do Cliente"
+            = f.input :price, label: "Valor"
+            = f.button :submit, 'Continuar', class: 'btn btn-primary'

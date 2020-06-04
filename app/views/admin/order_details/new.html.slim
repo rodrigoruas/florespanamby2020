@@ -1,0 +1,29 @@
+.container data-controller="admin--order"
+  .row
+    .cards.card-grid
+      - @products.shuffle.each do |product|
+        .card-admin.mar-top-md.flex.fdc.jcsb.tac style="max-width: 320px;"
+          div
+            img src="#{product.photo}"
+          .card-info-admin.pad-top-xs.pad-bottom-0
+            .card-desc
+              h3.mar-top-0
+                strong
+                  = product.name.upcase
+            .card-pricing.mar-bottom-0
+              - if product.fake_price > product.price
+                h3.green.mar-vert-0
+                  = "De: "
+                  span  style="text-decoration: line-through;"
+                    = "R$ #{product.fake_price}"
+                h2.green.mar-top-0  
+                  = "Por: R$ #{product.price}"
+              h2.green.mar-top-0  
+                = "R$ #{product.price}" 
+              .flex.jcsa 
+                = link_to new_admin_order_detail_path, remote: true  do
+                  h3.red.mar-top-0   
+                    = fa_icon "plus"  
+                = link_to product_path(product)  do  
+                  h3.red.mar-top-0 
+                    = fa_icon "external-link"   

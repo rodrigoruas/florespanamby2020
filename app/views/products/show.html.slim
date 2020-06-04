@@ -1,0 +1,33 @@
+.container-big.bg-white
+  .product-board
+    .row
+      .col-xs-12.col-sm-7
+        .product-photo
+          img src="#{@product.photo}"
+      .col-xs-12.col-sm-5
+        .product-desc.flex.fdc.jcsb
+          .prod-desc.pad-left-sm.pad-right-sm
+            h1.mar-top-0
+              strong
+                = @product.name.upcase
+            h2
+              strong
+                = "R$ #{@product.price}"
+            p.mar-top-md
+              = @product.description
+          = simple_form_for @order_detail, wrapper: :inline_form, html: { class: 'form-inline' }   do |f|
+            = f.input :product_id, as: :hidden, :input_html => { :value => "#{@product.id}" }
+            .tac.mar-top-md.mar-bottom-lg
+              = f.button :submit, 'Adicionar ao Carrinho', class: 'btn-danger btn-lg', style: "width: 100%"
+          / .box.bg-white.pad-sm
+          /   .row
+          /     - @product.sub_categories.each do |sc|
+          /       .col-xs-6.tac
+          /         p
+          /           = link_to category_sub_category_path(sc.category, sc.slug) do
+          /             = "##{sc.name.truncate(25)}"
+
+
+
+
+

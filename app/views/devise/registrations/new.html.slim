@@ -1,0 +1,35 @@
+.container.pad-md data-controller="devise"
+  .row
+    .col-md-8.col-md-offset-2
+      .section-box
+        .bg-white.tal.pad-md
+          .row
+            h3.pad-sm Faça Seu Cadastro
+            p.pad-sm Cadastre-se para poder continuar sua compra!
+          = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+            = f.error_notification
+            .row
+              .col-xs-12
+                .row
+                  .col-xs-12.col-sm-6
+                    = f.input :first_name, required: true, autofocus: true, label: "Nome", :input_html => {}, :label_html => {:class => "green"}
+                  .col-xs-12.col-sm-6
+                    = f.input :last_name, required: true, autofocus: true, label: "Sobrenome", :input_html => {}, :label_html => {:class => "green"}
+                .row
+                  .col-xs-12.col-sm-6
+                    = f.input :phone, required: false, autofocus: true, label: "Telefone", :input_html => {data: {target: "devise.phone"}}, :label_html => {:class => "green"}
+                  .col-xs-12.col-sm-6
+                    = f.input :cpf, required: false, autofocus: true, label: "CPF", :input_html => {data: {target: "devise.cpf"}}, :label_html => {:class => "green"}
+                .row.pad-left-sm.pad-right-sm
+                    = f.input :email, required: true, label: "E-mail", :input_html => {}, :label_html => {:class => "green"}
+                .row.pad-left-sm.pad-right-sm
+                  = f.input :password, required: true, label: "Cria sua Senha", :input_html => {}, :label_html => {:class => "green"}
+                .row.pad-left-sm.pad-right-sm
+                  = f.input :password_confirmation, required: true, label: "Confirme sua Senha", :input_html => {}, :label_html => {:class => "green"}
+            .row
+              .col-xs-12.tac
+                .row.tac
+                  = f.button :submit, "CADASTRE-SE", class: "btn-danger btn-lg", style: "width: 100%;"
+                .row.tac
+                  = link_to new_user_session_path, class: " green navbar-wagon-item navbar-wagon-link" do
+                    h3 Já tenho Conta

@@ -1,0 +1,14 @@
+.container
+  .row
+    .col-xs-12.col-sm-8.col-sm-offset-2
+      = simple_form_for [:admin, @delivery_cost], wrapper: :horizontal_form do |f|
+        .panel.panel-default
+          .panel-heading#info-bas
+            h4 Criar Valor de Frete
+          .panel-body
+            = f.input :name, maxlength: 30, char_counter: true, label: "Nome"
+            = f.input :min_distance, label: "Distância Mínima em Km"
+            = f.input :max_distance, label: "Distância Máxima em Km"
+            = f.input :multiplier, label: "Fator Multiplicador"
+            = f.input :published, label: "Publicado", label_html: {class: "mar-left-sm"}
+            = f.button :submit, 'Salvar', class: 'btn btn-primary'

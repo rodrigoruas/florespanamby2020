@@ -1,0 +1,30 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/rodribastos/code/rodrigoruas/flowers-ecommerce/app/mailers/user_mailer.rb": [
+        1,
+        1,
+        11,
+        11,
+        null,
+        null,
+        1,
+        0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/rodribastos/code/rodrigoruas/flowers-ecommerce/app/mailers/application_mailer.rb": [
+        1,
+        1,
+        1,
+        null
+      ]
+    },
+    "timestamp": 1564681881
+  }
+}

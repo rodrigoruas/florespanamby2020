@@ -1,0 +1,37 @@
+<div class="container pad-md">
+  <div class="row">
+    <div class="box bg-white pad-sm">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Entrega 24h?</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @products.each do |product| %>
+            <tr>
+              <td><%= product.name.truncate(30) %></td>
+              <td><%= "R$#{product.price}" %></td>
+              <% if product.same_day_delivery? %>
+                <td>Sim</td>
+              <% else %>
+                <td>Não</td>
+              <% end %>
+              <td>
+                <a href="floretal.com.br/#{product.slug}"><%= "floretal.com.br/#{product.slug}"%></a>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= link_to "Exportar Produtos", admin_list_path(format: "xlsx") %>
+    </div>
+  </div>
+</div>
+
+
+
+

@@ -1,0 +1,25 @@
+// Specific CSS for your home-page
+// h2 {
+//   font-size: 40px;
+// }
+
+.banner-content-newsletter {
+  color: white;
+  p {
+    color: white;
+  }
+  @media(max-width: $screen-xs-max) {
+    background-color: rgba(255, 255, 255, 0.8);
+    p {
+      color: black !important;
+    }
+     color: black;
+     height: 80%;
+     padding: 30px;
+  }
+}
+
+#page-wrapper {
+  margin-top: 70px;
+  min-height: calc(100vh - 170px);
+}

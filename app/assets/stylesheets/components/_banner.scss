@@ -1,0 +1,82 @@
+.banner {
+  background-size: cover !important;
+  background-position: center;
+  width: 100%;
+
+  h1 {
+    font-size: 35px;
+  }
+
+  p {
+    font-size: 17px;
+    font-weight: 400;
+    color: #6d6a6a;
+    margin-bottom: 30px;
+  }
+
+
+}
+
+.banner-payment {
+  background-size: cover !important;
+  background-position: center;
+  width: 100%;
+}
+
+.banner-content {
+  flex-grow: 1;
+  h1, .h1 {
+    font-size: floor(($font-size-base * 2.55));
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.2);
+  }
+  p {
+    font-size: 17px;
+    font-weight: 400;
+    color: #6d6a6a;
+    margin-bottom: 30px;
+  }
+
+}
+
+.new-banner-content {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: $black;
+  h1 {
+    font-size: 45px;
+    color: black;
+    font-weight: 100;
+
+  }
+}
+
+.mothers-banner-content {
+  color: $black;
+  @media(max-width: $screen-xs-max) {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  h1 {
+    font-size: 45px;
+    color: black;
+    font-weight: 100;
+
+  }
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.banner-wo-header-full { min-height: calc(100vh - 60px);}
+.banner-wo-header-two-thirds { min-height: calc(66vh - 60px);}
+.banner-wo-header-half { min-height: calc(50vh - 60px);}
+.banner-wo-header-third { min-height: calc(33vh - 60px);}
+
+.banner-full { min-height: 100vh;}
+.banner-four-fifties {min-height: 80vh;}
+.banner-two-thirds { min-height: 66vh;}
+.banner-half { min-height: 50vh;}
+.banner-third { min-height: 33vh;}
+.banner-quarter { min-height: 25vh}
+.banner-fifth { min-height: 20vh}

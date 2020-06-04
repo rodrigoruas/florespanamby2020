@@ -1,0 +1,25 @@
+.container
+  .row
+    .col-xs-12.col-sm-8.col-sm-offset-2
+      = simple_form_for [:admin, @product], wrapper: :horizontal_form do |f|
+        .panel.panel-default
+          .panel-heading#info-bas
+            h4 Criar Produto
+          .panel-body
+            = f.input :name, maxlength: 30, char_counter: true, label: "Nome"
+            = f.input :short_description, label: "Descrição Curta", input_html: {rows: 10 }
+            = f.input :description, label: "Descrição", input_html: { class: '', rows: 10}
+            = f.input :price, label: "Preço"
+            = f.input :fake_price, label: "Preço Falso"
+            = f.input :photo, label: "Escolha a Foto Principal", input_html: { class: 'pad-xs'}, label_html: { class: 'pad-sm'}
+            = f.input :photo_cache, as: :hidden
+            = f.input :same_day_delivery, label: "Entrega para o Mesmo dia", label_html: {class: "mar-left-sm"}
+            = f.input :published, input_html: { checked: true}, label_html: {class: "mar-left-sm"}
+
+            p.mar-top-md Selecione as Tags
+            .row
+              .col-xs-6
+                = f.association :sub_categories, collection: @sub_categories.first_half, as: :check_boxes, wrapper: :horizontal_boolean, label: false, label_method: lambda{|bp| "##{bp.name}"}
+              .col-xs-6
+                 = f.association :sub_categories, collection: @sub_categories.last_half, as: :check_boxes, wrapper: :horizontal_boolean, label: false, label_method: lambda{|bp| "##{bp.name}"}
+            = f.button :submit, 'Salvar', class: 'btn btn-primary'

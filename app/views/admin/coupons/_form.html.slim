@@ -1,0 +1,12 @@
+  .row
+    .col-xs-12.col-sm-6.col-sm-offset-3
+      = simple_form_for [:admin, @coupon], wrapper: :horizontal_form do |f|
+        .panel.panel-default
+          .panel-heading#info-bas
+            h4 Coupons
+            p bla bla
+          .panel-body
+            = f.input :code, maxlength: 20, char_counter: true, label: "Código"
+            = f.input :valid_until, as: :string, label: "Válido até", input_html: {type: "date", data: {target: ""}, class: "form-control", style: "width: 100%"}, placeholder: "15/10/2020"
+            = f.input :discount_percentage, label: "Porcentagem"
+            = f.button :submit, 'Salvar', class: 'btn btn-danger'

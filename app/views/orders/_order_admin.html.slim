@@ -1,0 +1,74 @@
+.container.mar-top-sm data-controller="orders--order"
+  .tac
+    h3.red COMPLETAR PEDIDO COMO ADMINISTRADOR
+  .row
+    = simple_form_for @order, remote: true, html: { class: 'form-horizontal' } do |f|
+      .col-xs-12.col-sm-6
+        h3.pad-left-0 Dados do remetente:
+        .form-inputs
+          .pad-sm
+            .flex.jcsb
+              .flex-grow-2
+                = f.input :sender_name, label: false, class: "mar-right-xs", placeholder: "Nome", input_html: {data: {target: "orders--order.senderName",  action: "keyup->orders--order#handleChange"}}
+              = f.input :sender_phone, label: false, input_html: {type: "tel", data: {target: "orders--order.senderPhone", action: "keyup->orders--order#handleChange"}}, placeholder: "Telefone"
+            = f.input :guest_email, label: false, input_html: {data: {target: "orders--order.senderEmail", action: "keyup->orders--order#handleChange keyup->orders--order#verifyEmail"}}, placeholder: "E-mail"
+            - if flash[:alert]
+              .red = flash[:alert]
+            - if flash[:notice]
+              .green = flash[:notice]
+        hr    
+        h3.pad-left-0 Dados do destinatário:
+        .form-inputs
+          .pad-sm
+            .flex.jcsb
+              .flex-grow-2
+                = f.input :recipient_name, label: false, class: "mar-right-xs", placeholder: "Nome"
+              = f.input :recipient_phone, label: false, input_html: {type: "tel", data: {target: "orders--order.phoneSec"}}, placeholder: "Telefone"
+            = f.input :message, as: :text, label: false, input_html: {rows: 8, style: "min-height: 250px;"}, placeholder: "Escreva uma linda mensagem!"
+  
+
+      .col-xs-12.col-sm-6
+        .row
+          .col-xs-12.col-sm-2
+          .col-xs-12.col-sm-10
+            input.hidden data-target="orders--order.orderId" value="#{@order.id}"
+            h3.pad-left-0 Dados da sua encomenda
+            .mar-top-md
+              .flex.jcsb.mar-top-xs.block-mobile
+                h5
+                  |Endereço:
+                h5.strong  
+                  =" #{@order.address} - #{@order.zipcode}" 
+              .flex.jcsb
+                h5
+                  |Data
+                h5.strong  
+                  =" #{@order.delivery_date.strftime("%d / %m / %Y")}" 
+              hr.mar-top-0   
+              .flex.jcsb.block-mobile.pad-mob-hor-sm 
+                h5.mar-top-sm
+                  |Horário de Entrega:
+                h5.strong
+                  = f.input :delivery_cost_id, :collection => @delivery_costs, label_method: lambda{|bp| "#{bp.name} - #{humanized_money_with_symbol(bp.price)}"}, class: "text-right pull-right mar-bottom-0", label: false, prompt: "Selecione o Horário de Entrega", style: "width: 100% ", input_html: {style: "width: 100%;", data: {action: "change->orders--order#deliveryCalculator change->orders--order#handleChange", target: "orders--order.delivery"}}   
+              .flex.jcsb
+                h5.mar-top-0
+                  |Valor do Frete:
+                h5.mar-top-0
+                  #order_msg
+                    strong
+                      |A ser calculado
+              hr        
+              .flex.jcsb
+                h5.mar-top-0
+                  |Valor Total:
+                h5.mar-top-0
+                  #order_price  
+                    strong
+                    = humanized_money_with_symbol(@order.default_price) 
+              hr.mar-top-0
+              .pad-mob-hor-sm   
+                = f.input :request, as: :text, label: false, input_html: {rows: 4, style: "min-height: 160px;"}, placeholder: "Algum pedido extra? Observação? Como podemos melhorar seu pedido?"       
+              hr.mar-top-0
+              div data-target="orders--order.alert"
+                p.red Os dados do remetente e o horário de entrega devem ser preenchidos      
+              = f.submit "Continuar",  class: "btn btn-danger", style: "width: 100%", data: {target: "orders--order.button"} 

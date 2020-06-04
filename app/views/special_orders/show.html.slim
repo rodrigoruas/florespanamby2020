@@ -1,0 +1,17 @@
+.container
+  .row
+    .col-xs-12
+      - unless @special_order.state == "paid"
+        h3
+          = @special_order.description
+        h3
+          = @special_order.customer_name
+        h3
+          = @special_order.customer_email
+        h3
+          = @special_order.price
+          = form_tag  special_order_special_payments_path(@special_order) do
+            script src="https://checkout.stripe.com/checkout.js" class="stripe-button pad-0" id="stripe-button" data-key="#{Rails.configuration.stripe[:publishable_key]}" data-name="Flor E Tal" data-email="#{@special_order.customer_email}" data-description="Dados do Cartão de Crédito" data-amount="#{@special_order.price_cents}" data-currency="#{@special_order.price.currency}" data-label="PAGAR COM CARTÃO DE CRÉDITO" data-locale="br"
+      - else
+        h3
+          = "Pagamento Confirmado. Obrigado"

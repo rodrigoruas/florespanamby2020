@@ -1,0 +1,30 @@
+.container
+  .row.mar-top-md
+    .col-xs-12
+      .flex.jcsb
+        h4 Categorias
+        = link_to new_admin_category_path, class: "btn btn-danger" do
+            |Adicionar Categoria
+  .row.mar-top-md
+    - @categories.each do |category|
+      .col-xs-12.col-sm-4
+        .panel.panel-default
+          .panel-heading
+            .flex.jcsb
+              h3.mar-top-0
+                = category.name
+              = link_to edit_admin_category_path(category) do
+                = fa_icon "edit 2x"
+              = link_to admin_category_path(category), method: :delete, data: { confirm: "Tem certeza?" } do
+                = fa_icon "trash 2x"
+            p
+              = "Total de #{category.sub_categories.size} sub-categorias"
+            hr.mar-top-xs.mar-bottom-xs
+            = link_to admin_category_path(category), class: "btn btn-danger" do
+                |Ver Sub Categorias
+            hr.mar-top-xs.mar-bottom-xs    
+            = simple_form_for [:admin, category] do |f|
+              p.mar-top-md Posição na barra de menus:
+              = f.input :navbar_order, collection: [1,2,3,4,5,6], label: false
+              = f.submit "Salvar", class: "btn btn-danger"
+

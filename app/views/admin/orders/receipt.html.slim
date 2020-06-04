@@ -1,0 +1,83 @@
+.container-big data-controller="orders"
+  .flex.jcsb.aic
+    div
+      h3.pad-left-sm
+        = "Pedido número: #{@order.global_id}.#{@order.delivery_date.strftime("%d%m%Y")}"
+      h3.pad-left-sm  
+        = "STATUS DO PEDIDO: #{@order.state_translated}"
+  .row
+    .col-xs-12.col-sm-7
+      .box.bg-white.pad-sm
+        - @order.order_details.each do |od|
+          .flex.jcsb.aic
+            .avatar-index.hidden-xs
+              = image_tag od.product.photo, style: "max-width: 150px; border-radius: 5px;"
+            .mar-bottom-0
+              h2
+                strong
+                  = "#{od.quantity} x #{od.product.name.truncate(30)}"
+            h2.mar-bottom-0
+              = humanized_money_with_symbol(od.product.price)
+          hr.mar-top-xs
+        h2
+          strong
+            = @order.extra_products
+        .row
+          .col-xs-7
+          .col-xs-5
+            - if @order.coupon == nil
+              h3.tar.mar-top-0
+                strong
+                  = "Frete #{humanized_money_with_symbol(@order.delivery_price)}"
+              h3.tar.mar-top-0
+                strong
+                  = "Total: #{humanized_money_with_symbol(@order.price)}"
+            - else
+              h3.tar.mar-top-0
+                strong
+                  = "Frete #{humanized_money_with_symbol(@order.delivery_price)}"
+              h3.tar.mar-top-0 style="text-decoration: line-through"
+                strong
+                  = "Total: #{humanized_money_with_symbol(@order.default_price)}"
+              h3.tar.mar-top-0
+                strong
+                  = "Total: #{humanized_money_with_symbol(@order.price)}"
+                h4.tar
+                    = "#{@order.coupon.discount_percentage}% de desconto"
+                h4.tar
+                  = "(#{@order.coupon.code})"
+      .pad-left-sm
+        h3.red Remetente:
+        p
+          = @order.sender_name
+        p
+          = @order.sender_phone
+        p
+          = @order.guest_email
+       
+
+      .pad-left-sm
+        h3.red Destinatário:
+        p
+          = @order.recipient_name
+        p
+          = @order.recipient_phone
+        h3.red Mensagem:
+        p
+          = @order.message
+        h3.red Observações
+        p
+          = @order.request
+    .col-xs-12.col-sm-5
+      .row
+        .col-xs-12
+          .box.bg-white.pad-xs
+            h4 Dados para Entrega
+            hr
+            h5
+              = "Endereço: #{@order.full_address}"
+            - unless @order.delivery_cost.nil?
+              h5
+                = "Data: #{(@order.delivery_date.strftime("%d / %m / %y"))}"
+              h5
+                = "Período: #{(@order.delivery_cost.name)}"

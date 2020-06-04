@@ -1,0 +1,6 @@
+- if @order.state == "paid"
+  = render 'paid'
+- elsif @order.admin_order == false
+  = render 'pending'
+- else
+  = render 'order_admin' 

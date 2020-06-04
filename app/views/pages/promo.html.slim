@@ -1,0 +1,56 @@
+div data-controller="mothers"  
+  .wrapper
+    .banner.banner-two-thirds.flex.jcfs style="padding: 100px; background-image: url('https://images.unsplash.com/photo-1452827073306-6e6e661baf57?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80');"
+      .mothers-banner-content.tac
+        h1.mar-top-xs Presentes em Promoção
+        h2.red style="margin-bottom: 0px; font-size: 40px;"
+          | A partir de R$29,90
+        h3 style="font-size: 30px;" Entregas para o mesmo dia
+        .pad-bottom-sm.mar-top-md
+          = link_to "#product-mothers", class: 'btn-danger btn-lg', style: "width: 100%" do
+            = "Confira as Promoções"
+.container-full
+  .row.pad-sm.tac
+    h2 Presentes Especiais em promoção
+    .cards.card-grid#product-mothers
+      - @products.shuffle.each do |product|
+        .card.mar-top-md.flex.fdc.jcsb.tac style="max-width: 320px;"
+          = link_to product_path(product.slug) do
+            div
+              img src="#{product.photo}"
+            .card-info.pad-top-xs.pad-bottom-0
+              .card-desc
+                h3.mar-top-0
+                  strong
+                    = product.name.upcase
+              .card-pricing.mar-bottom-0
+                - if product.fake_price > product.price
+                  h3.green.mar-vert-0
+                    = "De: "
+                    span  style="text-decoration: line-through;"
+                      = "R$ #{product.fake_price}"
+                  h2.green.mar-top-0  
+                    = "Por: R$ #{product.price}"
+                h2.green.mar-top-0  
+                  = "R$ #{product.price}"    
+  #aboutus.bg-white.mar-top-lg
+    .tac                          
+      = link_to products_path, class: 'btn-danger btn-lg mar-top-md', style: "width: 100%" do
+        = "Veja todos os nossos produtos"         
+    .container.mar-top-lg
+        .row.tac.pad-md
+            .col-md-4.col-sm-12
+                = cl_image_tag("Flores Panamby/flower-bouquet.svg", :height=>80, :crop=>"scale") 
+                .card-description.mar-top-sm
+                    h4 Melhores Produtos
+                    p Aqui você encontra sempre as flores de melhor qualidade
+            .col-md-4.col-sm-12
+                = cl_image_tag("Flores Panamby/support.svg", :height=>80, :crop=>"scale") 
+                .card-description.mar-top-sm
+                    h4 Atendimento Personalizado
+                    p Nossa equipe vai te ajudar a encontrar sua flor ideal sempre com simpatia e profissionalismo
+            .col-md-4.col-sm-12
+                = cl_image_tag("Flores Panamby/happy.svg", :height=>80, :crop=>"scale") 
+                .card-description.mar-top-sm
+                    h4 Satisfação Garantida
+                    p Todos os nossos clientes precisam sair satisfeitos. Faremos de tudo para que volte na nossa floricultura sempre que precisar!       

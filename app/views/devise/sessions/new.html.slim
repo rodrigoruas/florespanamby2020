@@ -1,0 +1,22 @@
+.container
+  .row.pad-sm
+    .col-xs-12.col-md-6.col-md-offset-3.section-box
+      .bg-white.tal.pad-sm
+        = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+          = f.error_notification
+          .row.pad-sm
+            = f.input :email, required: false, autofocus: true, label: "E-mail", :input_html => {:class => " col-xs-8"}, :label_html => {:class => "col-xs-4"}
+          .row.pad-sm
+            = f.input :password, required: false, label: "Senha", :input_html => {:class => " col-xs-8"}, :label_html => {:class => "col-xs-4"}
+          .row.pad-sm.pad-sm
+            = f.input :remember_me, as: :boolean, label: "Lembrar de mim" if devise_mapping.rememberable?
+          .row.pad-sm
+            = f.button :submit, "LOGIN", class: "btn-danger btn-lg", style: "width: 100%"
+          .row.tac
+            = link_to new_user_registration_path do
+              h4.green Faça sua conta
+          .row.tac
+            = link_to edit_user_password_path do
+              h4.green Esqueci a senha
+
+

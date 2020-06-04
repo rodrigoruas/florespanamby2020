@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Floricultura Flores Panamby - Venda de Flores e Presentes Online</title>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="text/html; charset=UTF-8">
+    <meta name="description" content="Sua floricultura virtual em São Paulo">
+    <meta property="og:title" content="Floricultura Flores Panamby- Venda de Flores e Presentes Online">
+    <meta property="og:image" content="https://res.cloudinary.com/dib2nyadi/image/upload/v1537888605/Flores%20Panamby/rawpixel-973147-unsplash.jpg">
+    <!-- <meta property="og:image" content="facebook-card.jpg"> -->
+    <meta property="og:description" content="Compre Flores Online com muito carinho com entrega em São Paulo">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application' %>
+    <%= javascript_pack_tag 'zipcode' %>
+
+    <script src="https://assets.pagar.me/checkout/1.1.0/checkout.js"></script>
+    <!-- Hotjar Tracking Code for www.florespanamby.com.br -->
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:1786978,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144991406-1"></script>
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '513932559235317');
+        fbq('track', 'PageView');
+      </script>
+      <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=513932559235317&ev=PageView&noscript=1"/></noscript>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-PBCGM8M');</script>
+        <!-- End Google Tag Manager -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164594781-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-164594781-1');
+      </script>
+  </head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBCGM8M"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <%= render "shared/navbar" %>
+    <% if notice %>
+      <!-- <p class="notice"><%= notice %></p> -->
+    <% end %>
+    <% unless alert.nil? %>
+      <p class="alert"><%= alert %></p>
+    <% end %>
+    <div id="page-wrapper">
+      <%= yield %>
+      <div class="whatsapp-bubble">
+        <%=link_to "https://api.whatsapp.com/send?phone=5511933404169&text=Ol%C3%A1%2C%20Flores%20Panamby!%20Gostaria%20de%20saber%20mais%20sobre%20um%20produto.%20Voc%C3%AAs%20podem%20me%20ajudar%3F", class: "wp-float" do %>
+          <img src="https://img.icons8.com/color/48/000000/whatsapp.png", width="60">
+        <%end%>
+      </div>
+    </div>
+    <%= render "shared/footer" unless @disable_footer %> 
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-144991406-1');
+    </script>
+  </body>
+</html>
+
+

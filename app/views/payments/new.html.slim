@@ -1,0 +1,134 @@
+.wrapper-payment.banner-payment  data-controller="payment"  style="background-image: url('https://res.cloudinary.com/dib2nyadi/image/upload/v1537888605/Flores%20Panamby/rawpixel-973147-unsplash.jpg');"
+  .container.flex.fdc.jcc style="min-height: 70vh;"
+    .flex.jcsa.mar-top-md
+      .window.mar-bottom-md
+        .row
+          .col-xs-12.tac    
+            h3.mar-top-sm.tac
+              |Finalize sua compra 
+            p
+              small
+                ' Etapas :
+                strong
+                  ' 1. Seu Carrinho >
+                  ' 2. Entrega e Frete >
+                  strong
+                    ' 3. Pagamento >
+                ' 4. Confirmação  
+        = link_to "https://api.whatsapp.com/send?phone=5511933404169&text=Ol%C3%A1%2C%20Flores%20Panamby!%20Gostaria%20de%20saber%20mais%20sobre%20um%20produto.%20Voc%C3%AAs%20podem%20me%20ajudar%3F" do
+          .bg-red.tac.pad-sm.mar-top-0
+            p.white.mar-bottom-0
+              |Pague também em Boleto Bancário ou Transferência! Contate-nos via whatsapp
+        .row.pad-bottom-md
+          .col-xs-12.col-sm-7
+            h3.mar-top-sm.tac
+              |Dados do Cartão de Crédito
+            = form_tag  order_payments_path(@order) do
+              .col-xs-12.col-md-10.col-md-offset-1
+                .row
+                  .col-xs-12.form-group
+                    .payment-alert data-target="payment.alert"
+                      - if flash[:alert]
+                          .red = flash[:alert]
+                      - if flash[:notice]
+                          .green = flash[:notice]
+                    = text_field_tag :card_holder_name, nil, placeholder: "Nome", class: "payment-form mar-top-sm payment-form-control", data: {target: "payment.name", action: "keyup->payment#handleChange keyup->payment#changeColor"}
+                  .col-xs-12.form-group
+                    = text_field_tag :card_number, nil, placeholder: "Número do Cartão", class: "payment-form mar-top-0 payment-form-control", data: {target: "payment.cardNumber", action: "keyup->payment#showForm keyup->payment#handleChange keyup->payment#changeColor"}
+                  .col-xs-12.col-sm-4.form-group
+                    = text_field_tag :installments, nil, placeholder: "Parcelas: 1 a 3", class: "payment-form mar-top-0 payment-form-control", data: {target: "installments", action: "keyup->payment#changeColor"}
+                  .col-xs-12.col-sm-4.form-group
+                    = text_field_tag :card_expiration_date, nil, placeholder: "Validade", class: "payment-form mar-top-0 payment-form-control", data: {target: "payment.cardDueDate", action: "keyup->payment#handleChange keyup->payment#verifyDate focus->payment#dateAlert"}
+                  .col-xs-12.col-sm-4.form-group
+                    = text_field_tag :card_ccv, nil, placeholder: "Código", class: "payment-form mar-top-0 payment-form-control", data: {target: "payment.ccv", action: "keyup->payment#handleChange keyup->payment#changeColor"}
+                .row data-target="payment.form"
+                  hr style="border-color: green"
+                  .col-xs-12.mar-bottom-0
+                    p.mar-bottom-0 Preencha com os dados do portador do cartão:
+                  .col-xs-12.col-sm-6.form-group
+                    = text_field_tag :card_holder_cpf, nil, placeholder: "CPF", class: "payment-form mar-top-sm payment-form-control", name: "cpf", data: {target: "payment.cpf", action: "keyup->payment#handleChange keyup->payment#verifyCpf"}
+                  .col-xs-12.col-sm-6.form-group
+                    = text_field_tag :card_holder_zipcode, nil, placeholder: "CEP", class: "payment-form mar-top-sm payment-form-control", data: {target: "payment.cep", action: "keyup->payment#handleChange keyup->payment#setAddress keyup->payment#changeColor"}
+                  .col-xs-12
+                    .row
+                      .col-xs-12.col-sm-9.form-group
+                        = text_field_tag :card_holder_street, nil, placeholder: "Logradouro", class: "payment-form mar-top-0 payment-form-control", data: {target: "payment.street", action: "keyup->payment#changeColor"}
+                      .col-xs-12.col-sm-3.form-group
+                        = text_field_tag :card_holder_street_number, nil, placeholder: "Numero", class: "payment-form mar-top-0 payment-form-control", disable: true, data: {action: "keyup->payment#changeColor"}
+                      .col-xs-12.col-sm-6.form-group
+                        = text_field_tag :card_holder_street_complement, nil, placeholder: "Complemento", class: "payment-form mar-top-0 payment-form-control", data: {action: "keyup->payment#changeColor"}
+                      .col-xs-12.col-sm-6.form-group
+                        = text_field_tag :card_holder_neighborhood, nil, placeholder: "Bairro", class: "payment-form mar-top-0 payment-form-control", data: {target: "payment.neighborhood", action: "keyup->payment#changeColor"}
+                      .col-xs-12.col-sm-6.form-group
+                        = text_field_tag :card_holder_city, nil, placeholder: "Cidade", class: "payment-form mar-top-0 payment-form-control", data: {target: "payment.city", action: "keyup->payment#changeColor"}
+                      .col-xs-12.col-sm-6.form-group
+                        = text_field_tag :card_holder_uf, nil, placeholder: "Estado", class: "payment-form mar-top-0 payment-form-control", data: {target: "payment.state", action: "keyup->payment#changeColor"}
+                .tac
+                  = button_tag "Pagar", data: {target: "payment.button", disable_with: "<i class='fa fa-spinner fa-spin'></i> Processando..."}, class: "btn btn-danger", style: "width: 100%"
+
+          .col-xs-12.col-sm-5
+            .pad-xs.aic
+              h3.mar-top-sm.tac
+                |Resumo da compra
+              - if @order.coupon == nil
+                  .flex.jcsb
+                    h3
+                      |Valor do Carrinho:
+                    h3.strong  
+                      =" #{humanized_money_with_symbol(@order.default_price)}"
+                  .flex.jcsb
+                    h3
+                      |Frete:
+                    h3.strong  
+                      =" #{humanized_money_with_symbol(@order.delivery_price)}"
+                  hr.mar-top-0   
+                  .flex.jcsb
+                    h3.mar-top-0
+                      |Valor Total:
+                    h3.strong.mar-top-0
+                      =" #{humanized_money_with_symbol(@order.price)}" 
+                  hr.mar-top-0      
+                  .flex.jcsb
+                    h3.mar-top-0
+                      |Data da Entrega:
+                    h3.strong.mar-top-0
+                      =" #{@order.delivery_date.strftime("%d / %m / %Y")}" 
+                  - if flash[:alert]
+                    .red = flash[:alert]
+                  - if flash[:notice]
+                    .green = flash[:notice]
+                  = form_tag new_order_payment_path(@order), method: :get, :class => "form-inline", style: "" do
+                    = text_field_tag :code,
+                      params[:code],
+                      class: "mar-top-sm payment-form-control mar-right-sm",
+                      style: "width: 70%; padding: 5px;",
+                      placeholder: "Tem código de desconto?"
+                    = button_tag "Aplicar", name: nil, class: "btn btn-primary pad-sm", style: "width:20%"   
+              - else
+                  .flex.jcsb
+                    h3
+                      |Valor do Carrinho:
+                    h3.strong style="text-decoration: line-through;"
+                      =" #{humanized_money_with_symbol(@order.get_products_price)}"
+                  .flex.jcsb
+                    h3
+                      |Valor Novo:
+                    h3.strong  
+                      =" #{humanized_money_with_symbol(@order.get_products_price - @discount)}"    
+                  .flex.jcsb
+                    h3
+                      |Frete:
+                    h3.strong  
+                      =" #{humanized_money_with_symbol(@order.delivery_price)}"
+                  hr.mar-top-0   
+                  .flex.jcsb
+                    h3.mar-top-0
+                      |Valor Total:
+                    h3.strong.mar-top-0
+                      =" #{humanized_money_with_symbol(@order.price)}" 
+                  hr.mar-top-0      
+                  .flex.jcsb
+                    h3.mar-top-0
+                      |Data da Entrega:
+                    h3.strong.mar-top-0
+                      =" #{@order.delivery_date.strftime("%d / %m / %Y")}"                

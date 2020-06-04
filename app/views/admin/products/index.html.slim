@@ -1,0 +1,39 @@
+.container
+  .pad-md
+    .row
+      .flex.jcsa
+        = link_to new_admin_product_path, class: "btn btn-primary" do
+          |Adicionar Produto
+        - if params[:query] == "published"
+          = link_to  admin_products_path, class: "btn btn-primary" do
+            p.mar-top-0.mar-bottom-0 Ver Todos os Produtos  
+        - else
+          = link_to  admin_products_path(query: "published"), class: "btn btn-primary" do
+            p.mar-top-0.mar-bottom-0 Ver Produtos Publicados
+      - if params[:query] == "published"      
+        h3.tac Lista de Produtos Publicados 
+      - else
+        h3.tac Lista de Todos os Produtos    
+      .box.bg-white.pad-sm
+        - @products.each do |product|
+          .flex.jcsb.aic
+            .avatar-index style="max-width: 75px;"
+              = image_tag product.photo, style: "height: 50px; border-radius: 5px; max-width: 50px;"
+            h4 style="width: 25%"
+              = product.name.truncate(30)
+            h4.tal style="min-width: 10%"
+              = "R$#{product.fake_price}"  
+            h4.tal style="min-width: 10%"
+              = "R$#{product.price}"
+            = link_to "Ver", product_path(product)
+            = link_to "Editar", edit_admin_product_path(product)
+            = link_to "Apagar", admin_product_path(product), method: :delete, data: { confirm: "Tem certeza?" }
+            - if product.published?
+              h4 Publicado
+            - else
+              h4 Não Publicado  
+            / - if product.same_day_delivery?
+            /   = cl_image_tag("24-hours_gercsj.png", :width => 40)
+            / - else
+            /   div style="width: 40px"
+          hr.mar-top-sm

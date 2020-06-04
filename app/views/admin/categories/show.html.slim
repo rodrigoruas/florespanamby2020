@@ -1,0 +1,18 @@
+.container
+  .row.mar-top-md
+    h3
+      = @category.name
+  .row.mar-top-md
+    .col-xs-12.col-sm-6
+      - @category.sub_categories.ordered_by_name.each do |sub|
+        .flex.jcsb.aic
+          p style="min-width: 20%;"
+            = sub.name
+          = link_to edit_admin_category_sub_category_path(@category.id,sub) do
+            = fa_icon "edit 2x"
+          = link_to admin_category_sub_category_path(@category.id,sub), method: :delete, data: { confirm: "Tem certeza?" } do
+            = fa_icon "trash 2x"
+        hr.mar-top-xs.mar-bottom-xs
+
+    = link_to new_admin_category_sub_category_path(@category), class: "btn btn-primary" do
+        |Adicionar Sub Categoria
