@@ -207,7 +207,9 @@ GEM
     mime-types (3.2.2)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2018.0812)
-    mimemagic (0.3.3)
+    mimemagic (0.4.3)
+      nokogiri (~> 1)
+      rake
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
@@ -249,7 +251,8 @@ GEM
       actionmailer (>= 3.0.0)
       postmark (~> 1.11.0)
     public_suffix (3.0.3)
-    puma (3.12.0)
+    puma (4.3.9)
+      nio4r (~> 2.0)
     puma_worker_killer (0.1.1)
       get_process_mem (~> 0.2)
       puma (>= 2.7, < 5)
@@ -464,7 +467,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   pg_search (~> 2.3.0)
   postmark-rails
-  puma (~> 3.7)
+  puma (~> 4.3)
   puma_worker_killer
   rails (~> 5.1.6)
   rails-i18n
