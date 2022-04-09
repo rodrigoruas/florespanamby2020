@@ -13,7 +13,7 @@
     "imask": "^5.1.6",
     "jquery": "^3.5.0",
     "mapbox-gl": "^0.54.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.25",
     "pagarme": "^4.8.0",
     "pikaday": "^1.8.0",
