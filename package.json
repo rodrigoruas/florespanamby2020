@@ -14,7 +14,7 @@
     "jquery": "^3.5.0",
     "mapbox-gl": "^0.54.0",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.25",
+    "moment-timezone": "^0.5.35",
     "pagarme": "^4.8.0",
     "pikaday": "^1.8.0",
     "places.js": "^1.18.2",
